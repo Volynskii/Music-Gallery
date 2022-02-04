@@ -1,4 +1,4 @@
-import React,{useState,useRef,useEffect} from 'react';
+import React,{useState,useRef} from 'react';
 import imgAlbum1 from '../images/album-1.png'
 import imgAlbum2 from '../images/album-2.png'
 import imgAlbum3 from '../images/album-3.png'
@@ -17,6 +17,7 @@ import GalleryItem from "./gallery-item";
 
 
 const Gallery = () => {
+
 
     const [currentSong,setCurrentSong] = useState({name:'', song:''});
     const [shouldPlay,setShouldPlay] = useState(true);
@@ -48,6 +49,7 @@ const Gallery = () => {
             setCurrentSong({name:name,song:song})
             player.current.play()
             setShouldPlay(true)
+            setIsOpenedPlayer(true)
         }
     };
 
@@ -55,11 +57,6 @@ const Gallery = () => {
 
     const handleTogglePlayer = () => {
         setIsOpenedPlayer(!isOpenedPlayer);
-    };
-
-
-    const playSong = () => {
-    player.current.pause();
     };
 
 
@@ -97,12 +94,13 @@ const Gallery = () => {
 
     ];
 
+   console.log('IS OPENED PLAYER?',isOpenedPlayer)
 
     return (
        <>
            <div  className="container">
 
-               <h1 onClick={playSong} className="heading"> music playlist </h1>
+               <h1 className="heading"> music playlist </h1>
 
                <div className={`box-container ${isOpenedPlayer && 'active'}`}>
 
@@ -127,7 +125,7 @@ const Gallery = () => {
                <div onClick={handleTogglePlayer}  id="close-player"
                     className={`fas fa-angle-up ${isOpenedPlayer ?'fa-times active':''}`}/>
                <h3 className="music-title">{currentSong.name}</h3>
-               <audio autoPlay={shouldPlay} onClick={playSong} ref={player} src={currentSong.song} controls/>
+               <audio autoPlay={shouldPlay} ref={player} src={currentSong.song} controls/>
            </div>
            </>
     );
